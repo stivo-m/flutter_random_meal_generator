@@ -267,67 +267,72 @@ class _CustomMealCardState extends State<CustomMealCard> {
           SizedBox(
             height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    sizedBoxHeight,
-                  ),
-                ),
-                child: RaisedButton.icon(
-                  icon: Icon(
-                    Icons.youtube_searched_for,
-                    color: Colors.white,
-                  ),
-                  color: Colors.red,
-                  elevation: 10,
-                  padding: EdgeInsets.symmetric(
-                    vertical: sizedBoxHeight * 2,
-                    horizontal: sizedBoxHeight * 3,
-                  ),
-                  onPressed: () => _launchURL(meal.youtube),
-                  label: Text(
-                    "Youtube",
-                    style: subHeadings.copyWith(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    sizedBoxHeight,
-                  ),
-                ),
-                child: RaisedButton.icon(
-                  icon: Icon(
-                    Icons.link,
-                    color: Colors.white,
-                  ),
-                  color: Colors.deepPurpleAccent,
-                  elevation: 10,
-                  padding: EdgeInsets.symmetric(
-                    vertical: sizedBoxHeight * 2,
-                    horizontal: sizedBoxHeight * 3,
-                  ),
-                  onPressed: () => _launchURL(meal.source),
-                  label: Text(
-                    "Source",
-                    style: subHeadings.copyWith(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          )
+          buildFinalRow(sizedBoxHeight, _launchURL)
         ],
       ),
+    );
+  }
+
+  Row buildFinalRow(
+      double sizedBoxHeight, Future<dynamic> _launchURL(dynamic url)) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              sizedBoxHeight,
+            ),
+          ),
+          child: RaisedButton.icon(
+            icon: Icon(
+              Icons.youtube_searched_for,
+              color: Colors.white,
+            ),
+            color: Colors.red,
+            elevation: 10,
+            padding: EdgeInsets.symmetric(
+              vertical: sizedBoxHeight * 2,
+              horizontal: sizedBoxHeight * 3,
+            ),
+            onPressed: () => _launchURL(meal.youtube),
+            label: Text(
+              "Youtube",
+              style: subHeadings.copyWith(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              sizedBoxHeight,
+            ),
+          ),
+          child: RaisedButton.icon(
+            icon: Icon(
+              Icons.link,
+              color: Colors.white,
+            ),
+            color: Colors.deepPurpleAccent,
+            elevation: 10,
+            padding: EdgeInsets.symmetric(
+              vertical: sizedBoxHeight * 2,
+              horizontal: sizedBoxHeight * 3,
+            ),
+            onPressed: () => _launchURL(meal.source),
+            label: Text(
+              "Source",
+              style: subHeadings.copyWith(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
