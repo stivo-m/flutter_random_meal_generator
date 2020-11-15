@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random_meal_generator/bloc/meal_bloc.dart';
 import 'package:random_meal_generator/models/meal.dart';
 import 'package:random_meal_generator/widgets/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomMealCard extends StatefulWidget {
   final Meal meal;
@@ -140,7 +141,7 @@ class _CustomMealCardState extends State<CustomMealCard> {
               bottom: 0,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: Colors.black26,
+                color: Colors.orangeAccent.withOpacity(0.5),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -165,6 +166,15 @@ class _CustomMealCardState extends State<CustomMealCard> {
   }
 
   Padding buildBottomSection(List<String> measuresAndIngredients) {
+    final double sizedBoxHeight = 10.0;
+    _launchURL(url) async {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -200,7 +210,26 @@ class _CustomMealCardState extends State<CustomMealCard> {
             height: 10,
           ),
           Text(
-            meal.instructions,
+            meal.instructions ?? "",
+            style: TextStyle(
+              color: Colors.white70,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            "Category",
+            style: subHeadings.copyWith(
+              color: Colors.white,
+              fontSize: 23,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            meal.category ?? "No Category",
             style: TextStyle(
               color: Colors.white70,
             ),
@@ -219,11 +248,84 @@ class _CustomMealCardState extends State<CustomMealCard> {
             height: 10,
           ),
           Text(
-            meal.tags,
+            meal.tags ?? "No Tags",
             style: TextStyle(
               color: Colors.white70,
             ),
           ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            "Actions",
+            textAlign: TextAlign.center,
+            style: subHeadings.copyWith(
+              color: Colors.white,
+              fontSize: 23,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    sizedBoxHeight,
+                  ),
+                ),
+                child: RaisedButton.icon(
+                  icon: Icon(
+                    Icons.youtube_searched_for,
+                    color: Colors.white,
+                  ),
+                  color: Colors.red,
+                  elevation: 10,
+                  padding: EdgeInsets.symmetric(
+                    vertical: sizedBoxHeight * 2,
+                    horizontal: sizedBoxHeight * 3,
+                  ),
+                  onPressed: () => _launchURL(meal.youtube),
+                  label: Text(
+                    "Youtube",
+                    style: subHeadings.copyWith(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    sizedBoxHeight,
+                  ),
+                ),
+                child: RaisedButton.icon(
+                  icon: Icon(
+                    Icons.link,
+                    color: Colors.white,
+                  ),
+                  color: Colors.deepPurpleAccent,
+                  elevation: 10,
+                  padding: EdgeInsets.symmetric(
+                    vertical: sizedBoxHeight * 2,
+                    horizontal: sizedBoxHeight * 3,
+                  ),
+                  onPressed: () => _launchURL(meal.source),
+                  label: Text(
+                    "Source",
+                    style: subHeadings.copyWith(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )
         ],
       ),
     );
