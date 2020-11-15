@@ -39,25 +39,37 @@ class _MealScreenState extends State<MealScreen> {
         backgroundColor: Colors.amber,
       ),
       body: SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.amber,
-                Colors.amber[600],
-              ],
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Image.asset(
+                'assets/app_bg.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: BlocProvider(
-            create: (context) => MealBloc(),
-            child: BlocBuilder<MealBloc, MealState>(
-              builder: (context, state) {
-                return buildBlocListener(_getMeal, context);
-              },
-            ),
-          ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.amber.withOpacity(0.6),
+                    Colors.amber[600].withOpacity(0.6),
+                  ],
+                ),
+              ),
+              child: BlocProvider(
+                create: (context) => MealBloc(),
+                child: BlocBuilder<MealBloc, MealState>(
+                  builder: (context, state) {
+                    return buildBlocListener(_getMeal, context);
+                  },
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
