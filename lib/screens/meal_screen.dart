@@ -26,18 +26,6 @@ class _MealScreenState extends State<MealScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          title,
-          style: subHeadings.copyWith(
-            color: Colors.white,
-            fontSize: 22,
-          ),
-        ),
-        leading: null,
-        backgroundColor: Colors.amber,
-      ),
       body: SafeArea(
         child: Stack(
           children: [
